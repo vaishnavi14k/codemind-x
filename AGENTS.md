@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture
+- Keep the product frontend-only until integrations are explicitly implemented; render each workspace area as a TanStack file route inside the shared CodeMind shell, and present unavailable repository-backed actions as disconnected rather than simulated.
