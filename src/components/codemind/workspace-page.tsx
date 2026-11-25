@@ -23,6 +23,7 @@ import {
   LockKeyhole,
   Network,
   Search,
+  Send,
   Settings2,
   ShieldAlert,
   ShieldCheck,
@@ -46,6 +47,7 @@ import {
   pageMetadata,
   type PageId,
 } from "@/lib/codemind-navigation";
+import type { ChatMessageDraft } from "@/lib/chat-contract";
 import { cn } from "@/lib/utils";
 
 function PageHeading({
@@ -346,17 +348,140 @@ function RepositoriesPage() {
 }
 
 function CodeChatPage() {
+  const [draft, setDraft] = useState<ChatMessageDraft>({ role: "user", content: "" });
+  const suggestions = [
+    { label: "Explain a code pattern", prompt: "Explain this code pattern and its trade-offs." },
+    { label: "Trace a bug", prompt: "Help me trace a bug across related modules." },
+    { label: "Review a change", prompt: "Review this proposed change for risks and missing tests." },
+  ];
+
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-68px)] w-full max-w-[1440px] flex-col px-4 pb-10 pt-7 sm:px-6 lg:px-8">
-      <PageHeading page="code-chat" description="A private, repository-aware conversation will live here." />
-      <Panel className="flex flex-1 items-center justify-center bg-panel">
-        <EmptyState
-          icon={Braces}
-          title="Connect a repository to start a code conversation"
-          description="Chat history is set to be saved to your account. GitHub and AI services are not connected yet, so no messages or repository citations can be created in this preview."
-          action={<ConnectLink label="Review connection status" />}
-        />
-      </Panel>
+    <div className="mx-auto w-full max-w-[1440px] px-4 pb-8 pt-6 sm:px-6 lg:px-8">
+      <PageHeading
+        page="code-chat"
+        description="One ongoing conversation for repository-aware questions."
+        trailing={
+          <Badge variant="outline" className="border-warning/30 bg-warning/10 text-warning">
+            <CircleDashed className="mr-1.5 size-3.5" />
+            AI not configured
+          </Badge>
+        }
+      />
+
+      <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_18rem]">
+        <Panel className="flex min-h-[34rem] min-w-0 flex-col">
+          <div className="flex min-h-[68px] items-center gap-3 border-b border-border px-4 py-3 sm:px-5">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-sm border border-brand/20 bg-brand/10 text-brand">
+              <Braces className="size-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <h2 className="truncate text-sm font-semibold text-foreground">Code conversation</h2>
+              <p className="mt-1 truncate text-[11px] text-muted-foreground">
+                Single thread · account history after database setup
+              </p>
+            </div>
+            <Badge variant="outline" className="hidden shrink-0 border-border text-muted-foreground sm:inline-flex">
+              One conversation
+            </Badge>
+          </div>
+
+          <div className="flex flex-1 flex-col items-center justify-center px-4 py-8 text-center sm:px-8">
+            <span className="mb-4 flex size-12 items-center justify-center rounded-md border border-brand/20 bg-brand/10 text-brand">
+              <Code2 className="size-5" strokeWidth={1.7} />
+            </span>
+            <p className="text-[10px] font-semibold uppercase text-brand">Conversation ready</p>
+            <h2 className="mt-2 text-lg font-semibold text-foreground">No messages yet</h2>
+            <p className="mt-2 max-w-lg text-xs leading-5 text-muted-foreground">
+              Connect an AI service and a repository to start. No answers or code citations are generated in this preview.
+            </p>
+
+            <div className="mt-6 grid w-full max-w-2xl gap-2 sm:grid-cols-3">
+              {suggestions.map((suggestion, index) => {
+                const Icon = index === 0 ? FileCode2 : index === 1 ? Search : GitPullRequest;
+                return (
+                  <Button
+                    key={suggestion.label}
+                    type="button"
+                    variant="outline"
+                    onClick={() => setDraft({ role: "user", content: suggestion.prompt })}
+                    className="h-auto min-h-[64px] justify-start gap-2.5 whitespace-normal border-border bg-background px-3 py-2.5 text-left text-xs leading-5 hover:border-brand/35 hover:bg-accent"
+                  >
+                    <Icon className="size-4 shrink-0 text-muted-foreground" />
+                    <span>{suggestion.label}</span>
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="border-t border-border p-3 sm:p-4">
+            <div className="rounded-sm border border-input bg-background p-2 focus-within:ring-2 focus-within:ring-ring">
+              <Textarea
+                aria-label="Message draft"
+                value={draft.content}
+                onChange={(event) => setDraft({ ...draft, content: event.target.value })}
+                placeholder="Ask a question about your code..."
+                className="max-h-40 min-h-[76px] resize-y border-0 bg-transparent px-2 py-1 text-sm shadow-none focus-visible:ring-0"
+              />
+              <div className="flex flex-wrap items-center justify-between gap-3 px-2 pb-1 pt-2">
+                <p className="text-[10px] leading-4 text-muted-foreground">
+                  Draft only · messages are not sent or saved here
+                </p>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span tabIndex={0}>
+                      <Button type="button" size="sm" disabled className="h-8">
+                        <Send className="size-3.5" />
+                        Send
+                      </Button>
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-64">
+                    Connect an AI service and database before sending or saving messages.
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </div>
+          </div>
+        </Panel>
+
+        <aside className="space-y-4">
+          <Panel>
+            <SectionTitle title="Conversation context" detail="Sources available to this thread." />
+            <div className="divide-y divide-border px-4">
+              {[
+                { label: "Repository", value: "Not connected", icon: GitBranch },
+                { label: "AI service", value: "Not configured", icon: Braces },
+                { label: "History", value: "Database pending", icon: Database },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.label} className="flex min-h-12 items-center gap-3 py-2.5">
+                    <Icon className="size-4 shrink-0 text-muted-foreground" />
+                    <span className="min-w-0 flex-1 text-xs text-foreground">{item.label}</span>
+                    <span className="text-right text-[10px] text-muted-foreground">{item.value}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </Panel>
+
+          <Panel>
+            <SectionTitle title="Saved profile" detail="Account details for private history." />
+            <div className="flex items-start gap-3 p-4">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-border bg-panel-raised text-muted-foreground">
+                <LockKeyhole className="size-4" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-foreground">Not signed in</p>
+                <p className="mt-1.5 text-[11px] leading-5 text-muted-foreground">
+                  Display name, avatar, and preferences are ready to save when account storage is connected.
+                </p>
+              </div>
+            </div>
+          </Panel>
+        </aside>
+      </div>
     </div>
   );
 }

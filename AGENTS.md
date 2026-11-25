@@ -31,3 +31,5 @@ use the editor.
 
 ## Project architecture
 - Keep the product frontend-only until integrations are explicitly implemented; render each workspace area as a TanStack file route inside the shared CodeMind shell, and present unavailable repository-backed actions as disconnected rather than simulated.
+- Keep chat and profile persistence contracts in a browser-safe library module separate from the UI, so a later database connection can supply saved data without coupling the view to storage.
+- Use a shared route wrapper to place each workspace page inside the CodeMind shell, keeping route files focused on page identity and metadata.

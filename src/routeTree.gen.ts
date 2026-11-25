@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AgentsRouteImport } from './routes/agents'
+import { Route as AiCodeChatRouteImport } from './routes/ai-code-chat'
+import { Route as ChangeImpactRouteImport } from './routes/change-impact'
+import { Route as DependenciesRouteImport } from './routes/dependencies'
+import { Route as GitIntelligenceRouteImport } from './routes/git-intelligence'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as RepositoriesRouteImport } from './routes/repositories'
+import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TestArchitectRouteImport } from './routes/test-architect'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgentsRoute = AgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiCodeChatRoute = AiCodeChatRouteImport.update({
+  id: '/ai-code-chat',
+  path: '/ai-code-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangeImpactRoute = ChangeImpactRouteImport.update({
+  id: '/change-impact',
+  path: '/change-impact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DependenciesRoute = DependenciesRouteImport.update({
+  id: '/dependencies',
+  path: '/dependencies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GitIntelligenceRoute = GitIntelligenceRouteImport.update({
+  id: '/git-intelligence',
+  path: '/git-intelligence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepositoriesRoute = RepositoriesRouteImport.update({
+  id: '/repositories',
+  path: '/repositories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestArchitectRoute = TestArchitectRouteImport.update({
+  id: '/test-architect',
+  path: '/test-architect',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/ai-code-chat': typeof AiCodeChatRoute
+  '/change-impact': typeof ChangeImpactRoute
+  '/dependencies': typeof DependenciesRoute
+  '/git-intelligence': typeof GitIntelligenceRoute
+  '/reports': typeof ReportsRoute
+  '/repositories': typeof RepositoriesRoute
+  '/security': typeof SecurityRoute
+  '/settings': typeof SettingsRoute
+  '/test-architect': typeof TestArchitectRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/ai-code-chat': typeof AiCodeChatRoute
+  '/change-impact': typeof ChangeImpactRoute
+  '/dependencies': typeof DependenciesRoute
+  '/git-intelligence': typeof GitIntelligenceRoute
+  '/reports': typeof ReportsRoute
+  '/repositories': typeof RepositoriesRoute
+  '/security': typeof SecurityRoute
+  '/settings': typeof SettingsRoute
+  '/test-architect': typeof TestArchitectRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/ai-code-chat': typeof AiCodeChatRoute
+  '/change-impact': typeof ChangeImpactRoute
+  '/dependencies': typeof DependenciesRoute
+  '/git-intelligence': typeof GitIntelligenceRoute
+  '/reports': typeof ReportsRoute
+  '/repositories': typeof RepositoriesRoute
+  '/security': typeof SecurityRoute
+  '/settings': typeof SettingsRoute
+  '/test-architect': typeof TestArchitectRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/agents'
+    | '/ai-code-chat'
+    | '/change-impact'
+    | '/dependencies'
+    | '/git-intelligence'
+    | '/reports'
+    | '/repositories'
+    | '/security'
+    | '/settings'
+    | '/test-architect'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/agents'
+    | '/ai-code-chat'
+    | '/change-impact'
+    | '/dependencies'
+    | '/git-intelligence'
+    | '/reports'
+    | '/repositories'
+    | '/security'
+    | '/settings'
+    | '/test-architect'
+  id:
+    | '__root__'
+    | '/'
+    | '/agents'
+    | '/ai-code-chat'
+    | '/change-impact'
+    | '/dependencies'
+    | '/git-intelligence'
+    | '/reports'
+    | '/repositories'
+    | '/security'
+    | '/settings'
+    | '/test-architect'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentsRoute: typeof AgentsRoute
+  AiCodeChatRoute: typeof AiCodeChatRoute
+  ChangeImpactRoute: typeof ChangeImpactRoute
+  DependenciesRoute: typeof DependenciesRoute
+  GitIntelligenceRoute: typeof GitIntelligenceRoute
+  ReportsRoute: typeof ReportsRoute
+  RepositoriesRoute: typeof RepositoriesRoute
+  SecurityRoute: typeof SecurityRoute
+  SettingsRoute: typeof SettingsRoute
+  TestArchitectRoute: typeof TestArchitectRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agents': {
+      id: '/agents'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-code-chat': {
+      id: '/ai-code-chat'
+      path: '/ai-code-chat'
+      fullPath: '/ai-code-chat'
+      preLoaderRoute: typeof AiCodeChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/change-impact': {
+      id: '/change-impact'
+      path: '/change-impact'
+      fullPath: '/change-impact'
+      preLoaderRoute: typeof ChangeImpactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dependencies': {
+      id: '/dependencies'
+      path: '/dependencies'
+      fullPath: '/dependencies'
+      preLoaderRoute: typeof DependenciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/git-intelligence': {
+      id: '/git-intelligence'
+      path: '/git-intelligence'
+      fullPath: '/git-intelligence'
+      preLoaderRoute: typeof GitIntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/repositories': {
+      id: '/repositories'
+      path: '/repositories'
+      fullPath: '/repositories'
+      preLoaderRoute: typeof RepositoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/test-architect': {
+      id: '/test-architect'
+      path: '/test-architect'
+      fullPath: '/test-architect'
+      preLoaderRoute: typeof TestArchitectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentsRoute: AgentsRoute,
+  AiCodeChatRoute: AiCodeChatRoute,
+  ChangeImpactRoute: ChangeImpactRoute,
+  DependenciesRoute: DependenciesRoute,
+  GitIntelligenceRoute: GitIntelligenceRoute,
+  ReportsRoute: ReportsRoute,
+  RepositoriesRoute: RepositoriesRoute,
+  SecurityRoute: SecurityRoute,
+  SettingsRoute: SettingsRoute,
+  TestArchitectRoute: TestArchitectRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

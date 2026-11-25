@@ -96,7 +96,7 @@ export const pageMetadata: Record<PageId, { title: string; description: string }
   },
   "code-chat": {
     title: "AI Code Chat",
-    description: "Ask questions about connected source code with file-level context.",
+    description: "A single ongoing conversation for questions about connected source code, with account-backed history.",
   },
   "agent-control": {
     title: "Agent Control Center",
